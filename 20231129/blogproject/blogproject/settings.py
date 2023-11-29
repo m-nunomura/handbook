@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # blogappを追加する
+    "blogapp.apps.BlogappConfig",
 ]
 
 MIDDLEWARE = [
@@ -103,9 +105,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+# 使用言語を設定
+LANGUAGE_CODE = "ja"
 
-TIME_ZONE = "UTC"
+# タイムゾーンを設定
+TIME_ZONE = "Asia/Tokyo"
 
 USE_I18N = True
 
