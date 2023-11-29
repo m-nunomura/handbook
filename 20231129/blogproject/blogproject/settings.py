@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # blogappを追加する
     "blogapp.apps.BlogappConfig",
-    "funcblogapp.apps.FuncblogappConfig",
 ]
 
 MIDDLEWARE = [

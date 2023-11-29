@@ -10,4 +10,5 @@ urlpatterns = [
     # viewsモジュールのIndexViewを実行
     # URLパターン名は"index"
     path("",views.IndexView.as_view(),name="index"),
+    path("func/",views.index_view,name="index")
 ]

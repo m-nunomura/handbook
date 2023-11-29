@@ -16,3 +16,29 @@ class IndexView(generic.TemplateView):
     '''
     # index.htmlをレンダリングする
     template_name = "blogapp/index.html"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    '''function'''
+def index_view(request):
+    # トップページのビュー
+    '''
+    Parameters:
+        request(HTTPRequest): クライアントからのリクエスト情報
+    Returns(HTTPResponse):
+        render()でテンプレートをレンダリングした結果
+    '''
+    return render(request,"blogapp/index.html")

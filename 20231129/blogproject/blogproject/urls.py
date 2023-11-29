@@ -24,7 +24,6 @@ urlpatterns = [
     # http(s)://ホスト名/以下のパスがadmin/にマッチングした場合
     # admin.site.urlsを呼び出し、Django管理サイトを表示する
     path("admin/", admin.site.urls),
-    path("func/",include("funcblogapp.urls")),
 
     # http(s)://ホスト名/へのアクセスはblogappの
     # URLConf(urls.py)を呼び出す
