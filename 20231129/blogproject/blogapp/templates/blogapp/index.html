@@ -67,7 +67,8 @@
                     {%for record in orderby_records%}
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="post.html">
+                        <!-- urlでURLパターン"blog-detail/<int:pk>/"を生成し、詳細ページへのリンクを設定-->
+                        <a href="{%url 'blogapp:blog_detail' record.pk%}">
                             <!-- 記事のタイトル-->
                             <h2 class="post-title">
                                 <!-- titleフィールドを出力-->

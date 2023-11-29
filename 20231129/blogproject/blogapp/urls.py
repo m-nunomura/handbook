@@ -32,6 +32,6 @@ urlpatterns = [
     # http(s)://ホスト名/以下のパスが"func"の場合
     # viewsモジュールのindex_view()を実行
     # URLパターン名は"index"
-    path("func/",views.index_view,name="index"),
-    path("func/blog-detail/<int:pk>/",views.blog_detail,name="blog_detail"),
+    path("func/",views.index_view,name="index2"),
+    path("func/blog-detail/<int:pk>/",views.blog_detail,name="blog_detail2"),
 ]
