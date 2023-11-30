@@ -37,9 +37,18 @@
                         <li class="nav-item">
                             <!-- ナビゲーションメニュー「HOME」のhref属性の値を設定-->
                             <a class="nav-link px-lg-3 py-3 py-lg-4" href="{%url 'blogapp:index'%}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">About</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Sample Post</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>
+
+                        <li class="nav-item">
+                            <!-- ナビゲーションメニュー「SCIENCE」のリンク先を名前付きURLパターンscience_listに設定する-->
+                            <a class="nav-link px-lg-3 py-3 py-lg-4" href="{%url 'blogapp:science_list'%}">SCIENCE</a></li>
+                            
+                        <li class="nav-item">
+                            <!-- ナビゲーションメニュー「DAILYLIFE」のリンク先を名前付きURLパターンdailylife_listに設定する-->
+                            <a class="nav-link px-lg-3 py-3 py-lg-4" href="{%url 'blogapp:dailylife_list'%}">DAILYLIFE</a></li>
+
+                        <li class="nav-item">
+                            <!-- ナビゲーションメニュー「MUSIC」のリンク先を名前付きURLパターンmusic_listに設定する-->
+                            <a class="nav-link px-lg-3 py-3 py-lg-4" href="{%url 'blogapp:music_list'%}">MUSIC</a></li>
                     </ul>
                 </div>
             </div>
