@@ -79,7 +79,8 @@
                     {%endfor%}
                     
                     <!-- Pager-->
-                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+                    <!-- ページネーションが組み込まれたテンプレートの読み込み-->
+                    {%include "pagination.html"%}
                 </div>
             </div>
         </div>

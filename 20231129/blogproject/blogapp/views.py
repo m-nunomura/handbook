@@ -1,10 +1,10 @@
-from django.shortcuts import render
+
 
 # django.viewsからgenericをインポート
 from django.views import generic
 
 # modelsをインポート
-from . import models
+from . import models,consts
 
 # Create your views here.
 
@@ -28,6 +28,8 @@ class IndexView(generic.ListView):
 
     #モデルBlogPostのオブジェクトにorder_by()を適用してBlogPostのレコードを投稿日時の降順で並び替える
     queryset = models.BlogPost.objects.order_by("-posted_at")
+
+    paginate_by = consts.ITEM_PER_PAGE
 
 
 
@@ -64,6 +66,12 @@ class BlogDetail(generic.DeleteView):
 
 
     '''function'''
+
+from django.shortcuts import render
+
+# Paginatorをインポート
+from django.core.paginator import Paginator
+
 def index_view(request):
     # トップページのビュー
     '''
@@ -79,11 +87,21 @@ def index_view(request):
     # モデルBlogPostのオブジェクトにorderby()を適用してBlogPostのレコードを投稿日時の降順で並べ替える
     records = models.BlogPost.objects.order_by("-posted_at")
 
+    # Paginator(レコード,1ページあたりのレコード数)でページに分割する
+    paginator = Paginator(records,consts.ITEM_PER_PAGE)
+
+    # GET陸エスのURLにpageパラメータがある場合はその値を取得する
+    # pageパラメータがない場合はデフォルトで1を返すようにする
+    page_number = request.GET.get("page",1)
+
+    # page()メソッドの引数にページ番号を設定し、該当ページのレコードを取得する
+    pages = paginator.page(page_number)
+
     # render()：
     # 第1引数：HttpRequestオブジェクト
     # 第2引数：レンダリングするテンプレート
     # 第3引数：テンプレートに引き渡すdict型のデータ{任意のキー:クエリの結果（レコードのリスト）}
-    return render(request,"blogapp/index.html",{"orderby_records":records})
+    return render(request,"blogapp/index.html",{"orderby_records":pages,"page_obj":pages})
 
 
 
