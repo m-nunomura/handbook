@@ -1,10 +1,20 @@
 
 
 # django.viewsからgenericをインポート
+from django.http import HttpResponse
 from django.views import generic
 
-# modelsをインポート
-from . import models,consts
+# models、consts、formsをインポート
+from . import models,consts,forms
+
+# django.urlからreverse_lazyをインポート
+from django.urls import reverse_lazy
+
+# django.contribからmessagesをインポート
+from django.contrib import messages
+
+# django.core.mailモジュールからEmailMessageをインポート
+from django.core.mail import EmailMessage
 
 # Create your views here.
 
@@ -111,6 +121,66 @@ class MusicView(generic.ListView):
 
 
 
+class ContactView(generic.FormView):
+    # 問い合わせページを表示する
+
+    '''
+    フォームで入力されたデータを取得し、メールの作成と送信を行う
+    '''
+
+    # contact.htmlをレンダリングする
+    template_name = "blogapp/contact.html"
+    
+    # クラス変数form_classにforms.pyで定義したContactFormを設定
+    form_class = forms.ContactForm
+
+    # 送信完了後にリダイレクトするページ
+    success_url = reverse_lazy("blogapp:contact")
+
+    def form_valid(self, form):
+        # FormViewクラスのform_valid()をオーバーライド
+
+        '''
+        フォームのバリデーションを通過したデータがPOSTされたときに呼ばれる
+        メール送信を行う
+
+        parameters:
+            form(objet): ContactFormのオブジェクト
+
+        Return:
+            HttpResponseRedirectのオブジェクト
+            オブジェクトをインスタンス化するとsuccess_urlで設定されているURLにリダイレクトされる
+        '''
+
+        # フォームに入力されたデータをフィールド名を指定して取得
+        name = form.cleaned_data["name"]
+        email = form.cleaned_data["email"]
+        title = form.cleaned_data["title"]
+        message = form.cleaned_data["message"]
+
+        # メールのタイトルの書式を設定
+        subject = "お問い合わせ：{}".format(title)
+        # フォームの入力データの書式を設定
+        message = "送信者名：{0}\nメールアドレス：{1}\nタイトル：{2}\nメッセージ：{3}".format(name,email,title,message)
+
+        # メールの送信元のアドレス
+        from_email = "admin@example.com"
+        # 送信先のメールアドレス
+        to_list = ["admin@example.com",]
+        # EmailMessageオブジェクトを生成
+        message = EmailMessage(subject=subject,body=message,from_email=from_email,to=to_list,)
+
+        # EmailMessageクラスのsend()でメールサーバからメールを送信
+        message.send()
+
+        # 送信完了後に表示するメッセージ
+        messages.success(self.request,"お問い合わせは正常に送信されました。")
+        
+        # 戻り値はスーパークラスのform?valid()の戻り値(HttpResponseRedirect)
+        return super().form_valid(form)
+
+
+
 
 
 
@@ -123,6 +193,9 @@ class MusicView(generic.ListView):
     '''function'''
 
 from django.shortcuts import render
+
+# redirectを追加
+from django.shortcuts import redirect
 
 # Paginatorをインポート
 from django.core.paginator import Paginator
@@ -286,3 +359,72 @@ def music_view(request):
     # 第2引数：レンダリングするテンプレート
     # 第3引数：テンプレートに引き渡すdict型のデータ{キーは"orderby_records":リクエストされたページのレコードのリスト}
     return render(request,"blogapp/music_list.html",{"object_records":pages,"music_records":pages})
+
+
+
+def contact_view(request):
+    # Contactページのビュー
+
+    '''
+    contact.htmlをレンダリングして戻り値として返す
+
+    Parameters:
+        request(HTTPRequest): クライアントからのリクエスト情報を格納したHTTPRequestオブジェクト
+
+    Returns(HTTPResponce):
+        Contactページへのアクセス時: render()でテンプレートをレンダリングした結果
+        sendボタンがクリックされた場合: メールの送信処理完了後、Contactページにリダイレクトする
+    '''
+
+    # Contactページへのアクセスがあった場合（リクエストがGETの場合）
+    # render()でテンプレートをレンダリングする
+    if request.method == "GET":
+
+        # ContactFormオブジェクトを生成
+        form = forms.ContactForm()
+
+        # render():
+        # 第1引数: HTTPRequestオブジェクト
+        # 第2引数: レンダリングするテンプレート
+        # 第3引数: テンプレートに引き渡すdict型のデータ{キーは"form":ContactFormオブジェクト}
+        return render(request,"blogapp/contact.html",{"form":form})
+    
+    # 送信ボタン（send）がクリックされた場合（リクエストがPOSTの場合）
+    else:
+
+        # ContactFormオブジェクトを生成（引数はPOSTされたフォームデータ）
+        form = forms.ContactForm(request.POST)
+
+        # POSTされたフォームのデータがバリデーションを通過しているか確認
+        if form.is_valid():
+
+            # フォームに入力されたデータをフィールド名を指定して取得
+            name = form.cleaned_data["name"]
+            email = form.cleaned_data["email"]
+            title = form.cleaned_data["title"]
+            message = form.cleaned_data["message"]
+
+            # メールのタイトルの書式を設定
+            subject = "お問い合わせ：{}".format(title)
+
+            # フォームの入力データの書式を設定
+            message = "送信者：{0}\nメールアドレス：{1}\nタイトル：{2}\nメッセージ：{3}".format(name,email,title,message)
+
+            # メールの送信元アドレス（Gmail）
+            from_email = "admin@example.com"
+
+            # 送信先のメールアドレス
+            to_list = ["admin@example.com",]
+
+            # EmailMessageオブジェクトを生成
+            message = EmailMessage(subject=subject,body=message,from_email=from_email,to=to_list)
+
+            # EmailMessageクラスのsend()でメールサーバからメールを送信
+            message.send()
+
+            # 送信完了語に表示するメッセージ
+            messages.success(request,"お問い合わせは正常に送信されました。")
+
+            # Contactページにリダイレクトする
+            return redirect("blogapp:contact")
+    return

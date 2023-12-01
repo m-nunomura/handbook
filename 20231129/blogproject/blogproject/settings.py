@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+# constantsをインポート
+from django.contrib.messages import constants
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -125,3 +128,11 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# レベル定数を指定するための環境変数MESSAGE_TAGS
+MESSAGE_TAGS = {
+    constants.SUCCESS:"alert alert-successs",
+}
+
+# フォームの送信データをターミナルに出力
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

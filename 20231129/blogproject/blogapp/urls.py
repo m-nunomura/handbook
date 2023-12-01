@@ -35,6 +35,12 @@ urlpatterns = [
     # URLパターンの名前を"music_list"にする
     path("music-list/",views.MusicView.as_view(),name="music_list"),
 
+    # 問い合わせページのURLパターン
+    # 問い合わせページのURLは「contact/」
+    # viewsモジュールのContactViewを実行
+    # URLパターンの名前を"contact"にする
+    path("contact/",views.ContactView.as_view(),name="contact"),
+
 
 
 
@@ -57,17 +63,23 @@ urlpatterns = [
     # scienceカテゴリの一覧ページのURLは「science-list/」
     # viewsモジュールのscience_view()関数を実行
     # URLパターンの名前を"science_list"にする
-    path("func/science-list/",views.science_view,name="science_list"),
+    path("func/science-list/",views.science_view,name="science_list2"),
 
     # dailylifeカテゴリの一覧ページのURLパターン
     # dailylifeカテゴリの一覧ページのURLは「dailylife-list/」
     # viewsモジュールのdailylife_view()関数を実行
     # URLパターンの名前を"dailylife_list"にする
-    path("func/dailylife-list/",views.dailylife_view,name="dailylife_list"),
+    path("func/dailylife-list/",views.dailylife_view,name="dailylife_list2"),
 
     # musicカテゴリの一覧ページのURLパターン
     # musicカテゴリの一覧ページのURLは「music-list/」
     # viewsモジュールのmusic_view()関数を実行
     # URLパターンの名前を"music_list"にする
-    path("func/music-list/",views.music_view,name="music_list"),
+    path("func/music-list/",views.music_view,name="music_list2"),
+
+    # 問い合わせページのURLパターン
+    # 問い合わせページのURLは「contact/」
+    # viewsモジュールのcontact_view()関数を実行
+    # URLパターンの名前を"contact"にする
+    path("func/contact/",views.contact_view,name="contact2"),
 ]
