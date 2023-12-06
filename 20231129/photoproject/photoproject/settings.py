@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     "photo.apps.PhotoConfig",
     # accountsアプリを追加する
     "accounts.apps.AccountsConfig",
+
+    # django-cleanupを追加する
+    "django_cleanup",
 ]
 
 MIDDLEWARE = [
@@ -144,3 +147,8 @@ EMAIL_HOST_USER = "m-nunomura@stroog.com"           # Gmailのアドレス
 EMAIL_HOST_PASSWORD = ""                # Gmailのアプリ用パスワード
 EMAIL_USE_TLS = True                                # SMTPサーバと通信する際にTLS（セキュア）接続を使う
 
+# mediaフォルダの場所（BASE_DIR以下のmedia）を登録
+MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+
+# mediaのURLを登録
+MEDIA_URL = "/media/"
