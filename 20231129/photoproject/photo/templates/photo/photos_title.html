@@ -12,7 +12,7 @@
           {%if user.is_authenticated%}
           
           <!-- ログイン中のボタン-->
-          <a class="btn btn-primary my-2" href="#">投稿する</a>
+          <a class="btn btn-primary my-2" href="{%url 'photo:post'%}">投稿する</a>
           <a class="btn btn-secondary my-2" href="{%url 'accounts:logout'%}">ログアウト</a>
           {%else%}
 
