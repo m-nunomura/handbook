@@ -41,6 +41,8 @@ INSTALLED_APPS = [
 
     # photoアプリを追加する
     "photo.apps.PhotoConfig",
+    # accountsアプリを追加する
+    "accounts.apps.AccountsConfig",
 ]
 
 MIDDLEWARE = [
@@ -126,3 +128,19 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR,"static"),)
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Userモデルの代わりにCustomUserモデルを使用する
+AUTH_USER_MODEL = "accounts.CustomUser"
+
+
+# メール送信のためのクラスを設定
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# メールサーバへの接続設定
+DEFAULT_FORM_EMAIL = "m-nunomura@stroog.com"        # メールの送信元のアドレス
+EMAIL_HOST = "smtp.gmail.com"                       # GmailのSMTPサーバ
+EMAIL_PORT = 587                                    # Gmailのポート番号
+EMAIL_HOST_USER = "m-nunomura@stroog.com"           # Gmailのアドレス
+EMAIL_HOST_PASSWORD = ""                # Gmailのアプリ用パスワード
+EMAIL_USE_TLS = True                                # SMTPサーバと通信する際にTLS（セキュア）接続を使う
+

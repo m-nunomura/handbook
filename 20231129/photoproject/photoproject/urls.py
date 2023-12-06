@@ -17,9 +17,30 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include    #include追加
 
+# auth.viewsをインポートしてauth_viewという名前で利用する
+from django.contrib.auth import views as auth_view
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     
     # photo.urlsへのURLパターン
     path("",include("photo.urls")),
+
+    # accounts.urlへのURLパターン
+    path("",include("accounts.urls")),
+
+    # パスワードリセットのためのURLパターン
+    # PasswordResetConfirmViewがプロジェクトのurls.pyを参照するのでここに記載
+    
+    # パスワードリセット申し込みページ
+    path("password_reset/",auth_view.PasswordResetView.as_view(template_name="accounts/password_reset.html"),name="password_reset"),
+
+    # メール送信完了ページ
+    path("password_reset/done/",auth_view.PasswordResetDoneView.as_view(template_name="accounts/password_reset_sent.html"),name="password_reset_done"),
+
+    # パスワードリセットページ
+    path("reset/<uidb64>/<token>/",auth_view.PasswordResetConfirmView.as_view(template_name="accounts/password_reset_form.html"),name="password_reset_confirm"),
+
+    # パスワードリセット完了ページ
+    path("reset/done/",auth_view.PasswordResetCompleteView.as_view(template_name="accounts/password_reset_done.html"),name="password_reset_complete"),
 ]
