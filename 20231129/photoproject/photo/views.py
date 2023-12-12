@@ -1,3 +1,5 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -94,3 +96,39 @@ class PostSuccessView(generic.TemplateView):
 
     # index.htmlをレンダリングする
     template_name = "photo/post_success.html"
+
+
+class CategoryView(generic.ListView):
+    # カテゴリページのビュー
+
+    '''
+    Attributes:
+        template_name: レンダリングするテンプレート
+        paginate_by: 1ページに表示するレコードの件数
+    '''
+
+    # imdex.htmlをレンダリングする
+    template_name = "photo/index.html"
+
+    # 1ページに表示するレコードの件数
+    paginate_by = consts.ITEM_PER_PAGE_CATE
+
+    def get_queryset(self):
+        # クエリを実行する
+
+        '''
+        self.kwargsの取得が必要なため、クラス変数querysetではなく、
+        get_queryset()のオーバーライドによりクエリを実行する
+        
+        Returns:
+            クエリによって取得されたレコード
+        '''
+
+        # self.kwargsでキーワードの辞書を取得し、categoryキー値(Categorysテーブルのid)を取得
+        category_id = self.kwargs["category"]
+
+        # filter（フィールド名=id）で絞り込む
+        categories = models.PhotoPost.objects.filter(category = category_id).order_by("-posted_at")
+
+        # クエリによって取得されたレコードを返す
+        return categories 
