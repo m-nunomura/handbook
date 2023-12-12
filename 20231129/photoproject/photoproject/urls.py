@@ -20,6 +20,12 @@ from django.urls import path,include    #include追加
 # auth.viewsをインポートしてauth_viewという名前で利用する
 from django.contrib.auth import views as auth_view
 
+# settingsを追加
+from django.conf import settings
+
+# staticを追加
+from django.conf.urls.static import static
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     
@@ -43,4 +49,7 @@ urlpatterns = [
 
     # パスワードリセット完了ページ
     path("reset/done/",auth_view.PasswordResetCompleteView.as_view(template_name="accounts/password_reset_done.html"),name="password_reset_complete"),
-]
+] 
+
+# urlpatternsにmediaフォルダのURLパターンを追加
+urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

@@ -8,8 +8,8 @@ from django.views import generic
 # django.urlsからreverse_lazyをインポート
 from django.urls import reverse_lazy
 
-# formsモジュールをインポート
-from . import forms
+# formsモジュールをインポート modelsモジュールをインポート
+from . import forms,models,consts
 
 # method_decoratorをインポート
 from django.utils.decorators import method_decorator
@@ -19,11 +19,17 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-class IndexView(generic.TemplateView):
+class IndexView(generic.ListView):
     # トップページのビュー
 
     # index.htmlをレンダリング
     template_name = "photo/index.html"
+
+    # モデルBlogPostのオブジェクトにorder_by()を適用して投稿日時の降順で並べ替える
+    queryset = models.PhotoPost.objects.order_by("-posted_at")
+
+    # 1ページに表示するレコードの件数
+    paginate_by = consts.ITEM_PER_PAGE
 
 
 # デコレータにより、CreatePhotoViewへのアクセスはログインユーザに限定される
