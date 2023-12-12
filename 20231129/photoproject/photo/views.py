@@ -132,3 +132,38 @@ class CategoryView(generic.ListView):
 
         # クエリによって取得されたレコードを返す
         return categories 
+    
+class UserView(generic.ListView):
+    # ユーザの投稿一覧ページのビュー
+
+    '''
+    Attributes:
+        template_name: レンダリングするテンプレート
+        paginate_by: 1ページに表示するレコードの件数
+    '''
+
+    # index.htmlをレンダリングする
+    template_name = "photo/index.html"
+
+    # 1ページに表示するレコードの件数
+    paginate_by = consts.ITEM_PER_PAGE_USER
+
+    def get_queryset(self):
+        # クエリを実行する
+
+        '''
+        self.kwargsの取得が必要なため、クラス変数querysetではなく、
+        get_queryset()のオーバーライドによりクエリを実行する
+
+        Retruns:
+            クエリによって取得されたレコード
+        '''
+
+        # self.kwargsでキーワードの辞書を取得し、userキー値(ユーザテーブルのid)を取得
+        user_id = self.kwargs["user"]
+
+        # filter(フィールド名=id)で絞り込む
+        user_list = models.PhotoPost.objects.filter(user=user_id).order_by("-posted_at")
+
+        # クエリによって取得されたレコードを返す
+        return user_list

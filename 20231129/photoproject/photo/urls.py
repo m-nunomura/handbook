@@ -19,4 +19,9 @@ urlpatterns = [
     # photos/<Categorysテーブルのid値>にマッチング
     # <int:category>は辞書{category:id値(int)}としてCategoryViewに渡される
     path("photos/<int:category>/",views.CategoryView.as_view(),name="photos_cat"),
+
+    # ユーザの投稿一覧ページ
+    # photos/<ユーザテーブルのid値>にマッチング
+    # <int:user>は辞書{user:id値(int)}としてUserViewに渡される
+    path("user-list/<int:user>/",views.UserView.as_view(),name="user_list"),
 ]
