@@ -256,3 +256,4 @@ class PhotoDeleteView(generic.DeleteView):
 
 
 
+#
