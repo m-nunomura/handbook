@@ -216,3 +216,43 @@ class MypageView(generic.ListView):
 
         # クエリによって取得されたレコードを返す
         return queryset
+    
+
+class PhotoDeleteView(generic.DeleteView):
+    # レコードの削除を行うビュー
+
+    '''
+    Attributes:
+        model: モデル
+        template_name: レンダリングするテンプレート
+        success_url: 削除完了後のリダイレクト先のURL
+    '''
+
+    # 操作の対象はPhotoPost
+    model = models.PhotoPost
+
+    # photo_delete.htmlをレンダリングする
+    template_name = "photo/photo_delete.html"
+
+    # 処理完了後にマイページにリダイレクト
+    success_url = reverse_lazy("photo:mypage")
+
+    def delete(self,request,*args,**kwargs):
+        # レコードの削除を行う
+
+        '''
+        Parameters:
+            self: PhotoDeleteViewオブジェクト
+            request: WSGIRequest(HttpRequest)オブジェクト
+            args: 引数として渡される辞書(dict)
+            Kwargs: キーワード月の辞書(dict){"pk":2}のようにレコードidが渡される
+
+        Returns:
+            HttpResponseRedirect(Xuccess_url)を渡してsaccess_urlにリダイレクト
+        '''
+
+        # スーパークラスのdelete()を実行
+        return super().delete(request,*args,**kwargs)
+
+
+
