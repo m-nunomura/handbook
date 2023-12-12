@@ -167,3 +167,20 @@ class UserView(generic.ListView):
 
         # クエリによって取得されたレコードを返す
         return user_list
+    
+class DetailView(generic.DetailView):
+    # 詳細ページのビュー
+
+    '''
+    投稿記事の詳細を表示するのでDetailViewを継承する
+    Attributes:
+        template_name: レンダリングするテンプレート
+        model: モデルのクラス    
+    '''
+
+    # detail.htmlをレンダリングする
+    template_name = "photo/detail.html"
+
+    # クラス変数modelにモデルPhotoPostを設定
+    model = models.PhotoPost
+
