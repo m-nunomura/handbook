@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
-from . import models
+from django.core.paginator import Paginator
+from . import models,consts
 # Create your views here.
 
 
@@ -9,6 +10,7 @@ class IndexView(generic.ListView):
     template_name = "blog/index.html"
     context_object_name = "orderby_records"
     queryset = models.BlogPost.objects.order_by("-posted_at")
+    paginate_by = consts.PAGINATE
 
 class BlogDetail(generic.DetailView):
     template_name = "blog/post.html"
@@ -23,8 +25,12 @@ class BlogDetail(generic.DetailView):
 '''
 def index_view(request):
     records = models.BlogPost.objects.order_by("-posted_at")
+    paginator = Paginator(records,consts.PAGINATE)
+    page_number = request.GET.get("page",1)
+    pages = paginator.page(page_number)
     context = {
-        "orderby_records":records,
+        "orderby_records":pages,
+        "page_obj":pages,
     }
     return render(request,"blog/index.html",context)
 
