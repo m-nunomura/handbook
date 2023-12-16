@@ -62,6 +62,15 @@ class MypageView(generic.ListView):
         queryset = models.PhotoPost.objects.filter(user=self.request.user).order_by("-posted_at")
         return queryset
 
+class PhotoDeleteView(generic.DeleteView):
+    template_name = "photo/photo_delete.html"
+    model = models.PhotoPost
+    success_url = reverse_lazy("photo:mypage")
+
+    def delete(self,request,*args,**kwargs):
+        return super().delete(request,*args,**kwargs)
+
+
 
 
 
