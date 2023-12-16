@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "photo.apps.PhotoConfig",
     "accounts.apps.AccountsConfig",
+    "django_cleanup",
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'メアド'
 EMAIL_HOST_PASSWORD = 'パスワード'
 EMAIL_USE_TLS = True
+
+MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+MEDIA_URL = "/media/"
