@@ -5,12 +5,14 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from . import forms
+from . import forms,models,consts
 # Create your views here.
 
 #'''
-class IndexView(generic.TemplateView):
+class IndexView(generic.ListView):
     template_name = "photo/index.html"
+    queryset = models.PhotoPost.objects.order_by("-posted_at")
+    paginate_by = consts.IMAGE_PAGENATE
 
 @method_decorator(login_required,name="dispatch")
 class CreatePhotoView(generic.CreateView):
