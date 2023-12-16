@@ -49,6 +49,12 @@ class UserView(generic.ListView):
         user_id = self.kwargs["user"]
         user_list = models.PhotoPost.objects.filter(user=user_id).order_by("-posted_at")
         return user_list
+    
+class DetailView(generic.DetailView):
+    template_name = "photo/detail.html"
+    model = models.PhotoPost
+
+
 
 
 
