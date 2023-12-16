@@ -54,6 +54,14 @@ class DetailView(generic.DetailView):
     template_name = "photo/detail.html"
     model = models.PhotoPost
 
+class MypageView(generic.ListView):
+    template_name = "photo/mypage.html"
+    paginate_by = consts.MYPAGE_PAGENATE
+    
+    def get_queryset(self):
+        queryset = models.PhotoPost.objects.filter(user=self.request.user).order_by("-posted_at")
+        return queryset
+
 
 
 
