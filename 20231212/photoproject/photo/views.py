@@ -41,6 +41,14 @@ class CategoryView(generic.ListView):
         categories = models.PhotoPost.objects.filter(category=category_id).order_by("-posted_at")
         return categories
 
+class UserView(generic.ListView):
+    template_name = "photo/index.html"
+    paginate_by = consts.USER_PAGENATE
+    
+    def get_queryset(self):
+        user_id = self.kwargs["user"]
+        user_list = models.PhotoPost.objects.filter(user=user_id).order_by("-posted_at")
+        return user_list
 
 
 
