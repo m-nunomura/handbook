@@ -1,3 +1,5 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -29,6 +31,16 @@ class CreatePhotoView(generic.CreateView):
 
 class PostSuccessView(generic.TemplateView):
     template_name = "photo/post_success.html"
+
+class CategoryView(generic.ListView):
+    template_name = "photo/index.html"
+    paginate_by = consts.CATE_PAGENATE
+    
+    def get_queryset(self):
+        category_id = self.kwargs["category"]
+        categories = models.PhotoPost.objects.filter(category=category_id).order_by("-posted_at")
+        return categories
+
 
 
 
